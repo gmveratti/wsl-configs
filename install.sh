@@ -44,7 +44,6 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # 6. Pacotes Brew
 echo "📦 Instalando pacotes via Brew..."
-# Removi a duplicata do python e o pip isolado (o python do brew já traz pip)
 brew install gcc go java neovim node python lazygit lazydocker
 
 # 7. Git Config
