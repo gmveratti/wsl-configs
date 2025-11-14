@@ -2,7 +2,6 @@
 
 # 1. Oh My Bash
 echo "🎨 Instalando Oh My Bash..."
-# O flag --unattended evita que ele entre no shell imediatamente e pare o script
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" --unattended
 
 # 2. System Update & RPM Fusion
