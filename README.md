@@ -1,5 +1,8 @@
+## 🚀 Instalação
+
+```bash
 # 1. Baixar o repositório
-git clone https://github.com/gmveratti/wsl-configs.git
+git clone [https://github.com/gmveratti/wsl-configs.git](https://github.com/gmveratti/wsl-configs.git)
 
 # 2. Entrar na pasta
 cd wsl-configs
