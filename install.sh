@@ -1,10 +1,6 @@
 #!/bin/bash
 
-# 1. Oh My Bash
-echo "🎨 Instalando Oh My Bash..."
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" --unattended
-
-# 2. System Update & RPM Fusion
+# 1. System Update & RPM Fusion
 echo "🔄 Atualizando sistema..."
 sudo dnf upgrade --refresh -y
 
@@ -17,10 +13,14 @@ sudo dnf install -y rpmfusion-free-release-tainted rpmfusion-nonfree-release-tai
 
 sudo dnf install ncurses -y
 
-# 3. Ferramentas Base
+# 2. Ferramentas Base
 echo "🛠️ Instalando Ferramentas de Desenvolvimento..."
 sudo dnf groupinstall "Development Tools" -y
 sudo dnf install procps-ng curl file git -y
+
+# 3. Oh My Bash
+echo "🎨 Instalando Oh My Bash..."
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" --unattended
 
 # 4. Docker (Configuração Robusta)
 echo "🐳 Configurando Docker..."
