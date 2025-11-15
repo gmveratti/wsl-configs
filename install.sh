@@ -15,7 +15,7 @@ https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -
 
 sudo dnf install -y rpmfusion-free-release-tainted rpmfusion-nonfree-release-tainted
 
-sudo dnf install ncurses
+sudo dnf install ncurses -y
 
 # 3. Ferramentas Base
 echo "🛠️ Instalando Ferramentas de Desenvolvimento..."
