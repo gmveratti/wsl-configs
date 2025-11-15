@@ -13,7 +13,7 @@ sudo dnf install -y \
 https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
 https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
-sudo dnf install -y rpmfusion-free-release-tainted rpmfusion-nonfree-release-tainted
+sudo dnf install -y rpmfusion-free-release-tainted rpmfusion-nonfree-release-tainted 
 
 sudo dnf install ncurses -y
 
@@ -29,7 +29,7 @@ sudo dnf remove -y docker docker-client docker-client-latest docker-common docke
 sudo dnf -y install dnf-plugins-core
 sudo dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
 
-sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 
 sudo systemctl enable --now docker
 
