@@ -57,7 +57,7 @@ git config --global color.ui auto
 
 # 8. Neovim Setup
 echo "⚡ Configurando LazyVim..."
-# Garante que não existe config antiga para evitar erro no git clone
+
 rm -rf ~/.config/nvim
 rm -rf ~/.local/share/nvim
 
@@ -66,10 +66,8 @@ rm -rf ~/.config/nvim/.git
 
 cd ~/.config/nvim/lua/plugins/ || exit
 
-# Clona suas configs
 git clone https://github.com/gmveratti/nvim-configs.git
 
-# Move e limpa
 mv nvim-configs/*.lua .
 rm -rf nvim-configs
 
