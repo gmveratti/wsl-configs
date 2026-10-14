@@ -73,8 +73,62 @@ sudo dnf install -y \
   ca-certificates gnupg2 tar unzip zip xz \
   gcc gcc-c++ make cmake pkgconf-pkg-config \
   openssl-devel zlib-devel readline-devel libffi-devel \
-  ripgrep fd-find fzf tree-sitter-cli \
+  ripgrep fd-find fzf tree-sitter-cli fontconfig \
   python3-pip pipx jq ShellCheck dnf5-plugins flatpak distrobox
+
+log '🔤 Instalando JetBrains Mono Nerd Font para terminal e LazyVim...'
+# Instalação no perfil do usuário (não modifica as fontes globais do Fedora).
+# Edição Nerd Font MONO: largura fixa e ícones compatíveis com editores/terminal.
+font_dir="$HOME/.local/share/fonts/JetBrainsMonoNerdFont"
+font_family='JetBrainsMono Nerd Font Mono'
+font_size='11'
+mkdir -p "$font_dir"
+if [[ -f "$font_dir/JetBrainsMonoNerdFontMono-Regular.ttf" ]]; then
+  echo 'JetBrains Mono Nerd Font já instalada; preservando os arquivos.'
+else
+  font_tmp="$(mktemp -d)"
+  font_archive="$font_tmp/JetBrainsMono.tar.xz"
+  if curl --fail --location --retry 3 --silent --show-error \
+      'https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz' \
+      -o "$font_archive" && tar -xJf "$font_archive" -C "$font_tmp"; then
+    mapfile -d '' -t font_files < <(find "$font_tmp" -type f -name 'JetBrainsMonoNerdFontMono-*.ttf' -print0)
+    if (( ${#font_files[@]} > 0 )); then
+      for font_file in "${font_files[@]}"; do
+        install -m 0644 "$font_file" "$font_dir/"
+      done
+      echo "✔️  ${#font_files[@]} arquivos da JetBrains Mono Nerd Font instalados."
+    else
+      warn 'O arquivo da Nerd Fonts não continha as fontes Mono esperadas.'
+    fi
+  else
+    warn 'Não foi possível baixar/descompactar a JetBrains Mono Nerd Font.'
+  fi
+  rm -rf -- "$font_tmp"
+fi
+
+if [[ -f "$font_dir/JetBrainsMonoNerdFontMono-Regular.ttf" ]]; then
+  fc-cache -f "$font_dir"
+  # Altera só a fonte monoespaçada do GNOME; mantém fontes de interface intactas.
+  if command_exists gsettings; then
+    if gsettings list-schemas | grep -Fxq 'org.gnome.desktop.interface'; then
+      gsettings set org.gnome.desktop.interface monospace-font-name "$font_family $font_size" \
+        || warn 'Não foi possível definir a fonte monoespaçada do GNOME nesta sessão.'
+    fi
+    # No Fedora GNOME com Ptyxis, seleciona a fonte também no terminal.
+    if gsettings list-schemas | grep -Fxq 'org.gnome.Ptyxis'; then
+      if gsettings list-keys org.gnome.Ptyxis | grep -Fxq 'font-name'; then
+        gsettings set org.gnome.Ptyxis font-name "$font_family $font_size" \
+          || warn 'Não foi possível configurar a fonte do Ptyxis.'
+      fi
+      if gsettings list-keys org.gnome.Ptyxis | grep -Fxq 'use-system-font'; then
+        gsettings set org.gnome.Ptyxis use-system-font false \
+          || warn 'Não foi possível ativar a fonte personalizada no Ptyxis.'
+      fi
+    fi
+  else
+    warn 'gsettings indisponível; selecione a JetBrains Mono Nerd Font Mono no terminal manualmente.'
+  fi
+fi
 
 log '🚀 Kernel CachyOS e otimizações SCX/UKSMD...'
 # Repositórios COPR de terceiros. O kernel padrão do Fedora permanece instalado
