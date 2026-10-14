@@ -67,7 +67,7 @@ fi
 # sudo dnf install -y rpmfusion-free-release-tainted rpmfusion-nonfree-release-tainted
 
 log '🛠️ Ferramentas essenciais e compiladores...'
-sudo dnf group install -y 'Development Tools'
+sudo dnf group install -y development-tools
 sudo dnf install -y \
   bash curl wget git git-lfs file procps-ng ncurses \
   ca-certificates gnupg2 tar unzip zip xz \
